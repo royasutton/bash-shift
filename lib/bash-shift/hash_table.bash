@@ -134,6 +134,9 @@ function hash_size_into()
 
     declare -i local __rv_value=0
 
+    #==========================================================================
+    #
+    #==========================================================================
     function foreach_function() { let __rv_value++; }
 
     hash_foreach $hash foreach_function
@@ -156,6 +159,9 @@ function hash_copy()
     declare local src_hash=$1
     declare local dst_hash=$2
 
+    #==========================================================================
+    #
+    #==========================================================================
     function foreach_function()
     {
         declare local key=$1
@@ -182,6 +188,9 @@ function hash_unset_all()
 {
     declare local hash=$1
 
+    #==========================================================================
+    #
+    #==========================================================================
     function foreach_function()
     {
         declare local key=$1
@@ -210,6 +219,9 @@ function hash_dump()
     declare local hash=$1
     declare local title=${2-hash table [$hash]}
 
+    #==========================================================================
+    #
+    #==========================================================================
     function foreach_function()
     {
         declare local key=$1
@@ -234,7 +246,6 @@ function hash_dump()
                   -cc '~' -hc '~' -hr -bc 1 \
                   -cc '+' -hc '=' -pl -bb
 
-
     return
 }
 
@@ -242,4 +253,3 @@ function hash_dump()
 #==============================================================================
 # eof
 #==============================================================================
-

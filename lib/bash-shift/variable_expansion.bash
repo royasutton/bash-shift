@@ -283,8 +283,11 @@ function expand_var_str()
     # make sure escape character is exactly one character
     [ ${#es_ch} -ne 1 ] && abort_invalid_arg "-e:ecape-character='$es_ch'"
 
+    #==========================================================================
     # parse and return variable name from in_string
-    function get_var_name() {
+    #==========================================================================
+    function get_var_name()
+    {
         declare local in_string="$1"
         declare local __rv_name=$2
 
@@ -410,4 +413,3 @@ function expand_var_str()
 #==============================================================================
 # eof
 #==============================================================================
-

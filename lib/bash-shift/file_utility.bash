@@ -237,8 +237,8 @@ function file_check_mode()
             # validate the permission check character
             [ $pch != '-' ] && [ $pch != $mname_s ] && \
                 abort_error "checking file [$file] for permissions [$perm];" \
-							"invalid character [$pch] at possition [$(($idx+1))];" \
-							"valid check for this possition is one of [${mname_s}|-|:]."
+                  "invalid character [$pch] at possition [$(($idx+1))];" \
+                  "valid check for this possition is one of [${mname_s}|-|:]."
 
             # append error to 'long' err_msg
             err_msg+=", $affirm $mclass $mname"
@@ -583,4 +583,3 @@ function file_backup()
 #==============================================================================
 # eof
 #==============================================================================
-

@@ -73,6 +73,7 @@ function print_textbox()
 {
     #==========================================================================
     # offset for each new line
+    #==========================================================================
     function do_offset() {
         declare -i local cnt
 
@@ -92,6 +93,7 @@ function print_textbox()
 
     #==========================================================================
     # box top and bottom
+    #==========================================================================
     function do_box() {
         function do_box_line() {
             declare -i local vcnt=$1
@@ -129,6 +131,7 @@ function print_textbox()
 
     #==========================================================================
     # a box text line
+    #==========================================================================
     function do_line() {
         declare local lt="$1"
         declare local ct="$2"
@@ -170,6 +173,7 @@ function print_textbox()
 
     #==========================================================================
     # a box horizontal box interior line
+    #==========================================================================
     function do_rule() {
         declare -i local hcnt=$bw
         declare -i local vcnt=0 \
@@ -193,6 +197,7 @@ function print_textbox()
 
     #==========================================================================
     # a box text line placed in a specific justification column
+    #==========================================================================
     function do_line_tjp() {
         declare local  tjp=$1
         declare local line="$2"
@@ -206,6 +211,7 @@ function print_textbox()
 
     #==========================================================================
     # split a text string across multiple lines as needed
+    #==========================================================================
     function do_mline() {
         declare local tjp=$1
         declare local mti="$2"
@@ -270,6 +276,7 @@ function print_textbox()
 
     #==========================================================================
     # output a pre-formated multi-line text string
+    #==========================================================================
     function do_fmline() {
         declare local tjp=$1
         declare local mti="$2"
@@ -288,6 +295,7 @@ function print_textbox()
 
     #==========================================================================
     # parse a multi-line text string based on input feild seperator (IFS)
+    #==========================================================================
     function do_ifsmline() {
         declare local mti="$1"
 
@@ -415,4 +423,3 @@ function print_textbox()
 #==============================================================================
 # eof
 #==============================================================================
-
