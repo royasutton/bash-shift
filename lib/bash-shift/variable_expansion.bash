@@ -221,12 +221,12 @@ function expand_var_get_list()
 
     abort_if_not_defined "$scope" "-s:scope"
 
-    declare local __rv_value 
+    declare local __rv_value
 
     function foreach_function()
     {
         declare local key=$1
-        
+
         [ -n "$__rv_value" ] && __rv_value+=" $key"
         [ -z "$__rv_value" ] && __rv_value="$key"
 
@@ -282,12 +282,12 @@ function expand_var_str()
 
     # make sure escape character is exactly one character
     [ ${#es_ch} -ne 1 ] && abort_invalid_arg "-e:ecape-character='$es_ch'"
-    
+
     # parse and return variable name from in_string
     function get_var_name() {
         declare local in_string="$1"
         declare local __rv_name=$2
-        
+
         declare -i local cnt=${#in_string}
         declare -i local idx
         declare -i local open_brace_cnt=0
@@ -344,7 +344,7 @@ function expand_var_str()
         declare local chr=${in_string:$idx:1}
 
         case $chr in
-        # escape character: begin variable substitution 
+        # escape character: begin variable substitution
         $es_ch)
             # get variable name at current possition
             declare local var \
@@ -359,22 +359,22 @@ function expand_var_str()
                 __rv_value+="${var_value}"
             else
                 # variable not found
-                
+
                 # replace with variable name
                 [[ -n "$ruv" ]] && \
                     __rv_value+="${es_ch}{${var}}"
-                
+
                 # replace with text
                 [[ -z "$ruv" && -n "$rut" ]] && \
                     __rv_value+="${rut_text}"
-                
+
                 # global abort control
                 [[ -z "$ruv" && -z "$rut" && \
                    -z "$expand_var_get_error_continue" ]] && \
                     abort_error \
                     "variable [$var] at character [$(($idx+1))] in string:" \
                     "[$in_string]" " undefined${scope+ in scope [$scope]}."
-                
+
                 # global text replacement
                 [[ -z "$ruv" && -z "$rut" && \
                    -n "$expand_var_get_error_text" ]] && \
@@ -396,7 +396,7 @@ function expand_var_str()
 
     # using eval will expand all variable names in __rv_value
     # that are visible within the scope of this statement. ie
-    # all local variables in this function and other global 
+    # all local variables in this function and other global
     # variables defined in the script.
 
     [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""

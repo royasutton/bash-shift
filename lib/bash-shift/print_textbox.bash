@@ -257,14 +257,14 @@ function print_textbox()
                 # start next line with word
                 line=" $word"
             fi
- 
+
             # advance index to where last word ended
             let idx=wcnt
         done
 
         # output last line if it exists
         [ -n "$line" ] && do_line_tjp $tjp "$line"
-        
+
         return
     }
 

@@ -26,7 +26,7 @@ include "external_command.bash"
 function common_textbox()
 {
     declare local title
-    
+
     while [ $# -gt 0 ] ; do
         case $1 in
         -t) title="$2"      ; shift 2   ;;
@@ -35,7 +35,7 @@ function common_textbox()
     done
 
     print_textbox -ct "$title" $* -bt -pl -bb
-    
+
     return
 }
 
@@ -50,7 +50,7 @@ function common_textbox()
 function common_textline()
 {
     declare local title
-    
+
     while [ $# -gt 0 ] ; do
         case $1 in
         -t) title="$2"      ; shift 2   ;;
@@ -59,7 +59,7 @@ function common_textline()
     done
 
     print_textbox -bc 0 -lt ":" -ct "$title" -rt ":" -fc "-" $* -pl
-    
+
     return
 }
 
@@ -98,7 +98,7 @@ function common_string_mod()
         -ccl)
             __rvv="${__rvv,,}"
         ;;
-        
+
         # convert to upper case
         -ccu)
             __rvv="${__rvv^^}"
@@ -109,7 +109,7 @@ function common_string_mod()
         # trim leading
         -tlc)
             declare local __idx=0 __cnt=${#__rvv}
-            while (( __idx<__cnt )) ; do 
+            while (( __idx<__cnt )) ; do
                 [[ ${__rvv:$__idx:1} != [$stc] ]] && break
                 let __idx++
             done
@@ -135,7 +135,7 @@ function common_string_mod()
     # if the evaluate flag '-e' is not set: avoid evaluating words in '${__rvv}'
     # preceeded by '$' by replacing all occurances of '$' with '\$' before eval
     [ -z "$ev" ] && __rvv=${__rvv//\$/\\$}
-    
+
     [ -n "$__rvn" ] && eval "${__rvn}=\"${__rvv}\""
 
     return
@@ -151,7 +151,7 @@ function common_string_mod()
 function common_confirm()
 {
     declare local message="$1"
-    
+
     declare local cont_conf
     [ -n "$message" ] && print_m -j "$message"
     print_select_char -m "continue [y/n]? :" -j -l yn -v cont_conf -i
@@ -245,7 +245,7 @@ function common_dump_expand_vars()
 
         expand_var_get ${scope+-s $scope} -n $item -v 'value' \
             || value="<not set>"
-        
+
         common_print_key_value -k "$item" ${kfw+-w $kfw} "-n"
         print_m -j "[$value]"
     done
@@ -289,7 +289,7 @@ function common_dump_ext_cmds()
 
     # do not through exception for non-existing commands
     declare local ext_cmd_get_error_continue=1
-    
+
     declare local item value
     for item in $list ; do
         if [[ "$item" == ":" || "$item" == "<sep>" ]] ; then
@@ -372,7 +372,7 @@ function common_set_ext_cmds()
     ext_cmd_setf ${s:+-s $s} -sp -n mv_f     -l "mv" -o "-f"
 
     ext_cmd_setf ${s:+-s $s} -nsp gzip
-    
+
     # terminal_utility requirements
     ext_cmd_setf ${s:+-s $s} -nsp tput
 

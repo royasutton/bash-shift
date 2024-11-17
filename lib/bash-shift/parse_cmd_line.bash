@@ -39,7 +39,7 @@ function parse_cmd_line_print_textbox_help()
 
     declare local tw
     declare local bw
-    
+
     # summary of arguments handled by parse_cmd_line.bash
     declare local ss="
  -c|--conf <file>     : specify absolute path to configuration script
@@ -63,7 +63,7 @@ function parse_cmd_line_print_textbox_help()
         case $1 in
        -ahs) hs+="$2"    ; shift 1  ;;
        -alh) hs+="$ss"              ;;
-       
+
        -ahu) hu+="$2"    ; shift 1  ;;
        -alu) hu+="$su"              ;;
 
@@ -90,11 +90,11 @@ function parse_cmd_line_print_textbox_help()
         -hc '-' -hr -hc '=' \
         -lt " summary:" -pl -clr \
         -ifs '' -ljfml "$hs" \
-        -hr 
+        -hr
 
     [ -n "$hu" ] && print_textbox ${tw+-tw $tw} ${bw+-bw $bw} \
         -lt " usage:" -pl -clr -bl -ljml "$hu" -hr
-    
+
     [ -n "$cd" ] && print_textbox ${tw+-tw $tw} ${bw+-bw $bw} \
         -ct "configuration directory:" -pl \
         -ct "${script_conf_dir}" -pl \
@@ -133,22 +133,22 @@ function parse_cmd_line()
     declare local handler_function=$1
     declare local verb_level=$2
     shift 2
-    
+
     print_m_vl $verb_level "parsing command line"
 
     while [ $# -gt 0 ] ; do
-    
+
         # call handler for custom options
         if [ -n "$handler_function" ] ; then
             $handler_function $*
-            
+
             declare local ret_val=$?
             if [ $ret_val -gt 0 ] ; then
                 shift $ret_val
                 continue
             fi
         fi
-        
+
         # standard options
         case $1 in
         -c|--conf)
@@ -230,17 +230,17 @@ function parse_cmd_line_handle_flags()
     done
 
     declare -i local fc=0
-    
+
     # list the configuration directory
     if [ -n "$list_conf_flag" ] ; then
         declare local ls_l
         ext_cmd_get ${cs+-s $cs} -nv_po ls_l
-        
+
         common_textbox -t "[ begin: configuration files ]"
         print_m -j $ls_l ${script_conf_dir}
         eval $ls_l ${script_conf_dir}
         common_textline -t "[ end: configuration files ]"
-        
+
         let fc++
     fi
 
@@ -248,26 +248,26 @@ function parse_cmd_line_handle_flags()
     if [ -n "$status_flag" ] ; then
         common_dump_expand_vars ${vs+-s $vs}
         print_m -j
-        
+
         common_dump_ext_cmds ${cs+-s $cs}
         print_m -j
-        
+
         let fc++
     fi
 
     # display help
     if [ -n "$print_help_flag" ] ; then
         $hf
-        
+
         let fc++
     fi
 
     # configuration specified
     if [[ -n "$cr" && -z "$script_conf_file" && $fc -eq 0 ]] ; then
         common_textbox -t "please specify a configuration file." -hc "-" -bc 2
-        
+
         print_m -j "use '$script_base_name -h' for help."
-        
+
         exit 1
     fi
 
@@ -275,10 +275,10 @@ function parse_cmd_line_handle_flags()
     if [ -n "$edit_conf_flag" ] ; then
         declare local edit
         ext_cmd_get ${cs+-s $cs} -nv_p 'edit'
-        
+
         print_m -j $edit \"$script_conf_file\"
         eval "$edit \"$script_conf_file\""
-        
+
         let fc++
     fi
 

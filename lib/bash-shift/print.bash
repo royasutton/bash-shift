@@ -42,7 +42,7 @@ function print_m()
     -J) print_m -j -n -r ${#script_base_name} ' ' -j ' ' ; shift 1  ;;
      *) echo -n ${script_base_name}:                                ;;
     esac
-    
+
 
     while [ $# -gt 0 ] ; do
         case $1 in
@@ -231,7 +231,7 @@ function print_select_char()
     declare local __rv_value=$got_ch
 
     [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""
-    
+
     return
 }
 

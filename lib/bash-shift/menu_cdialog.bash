@@ -144,7 +144,7 @@ function menu_is_property()
         || $prop == default \
         || $prop == default_text \
         || $prop == timeout \
-       ]] 
+       ]]
     then
         return 0
     else
@@ -228,11 +228,11 @@ function menu_get_layout()
         declare local __rv_value
 
         hash_get_into $menu _menu_layout_${prop}_ '__rv_value'
-        
+
         print_debug_vl 5 "[$menu]:[$prop]=[$__rv_value]"
 
         [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""
-        
+
         return 0
     else
         print_debug_vl 5 "[$menu]:[$prop]=(not defined)"
@@ -313,9 +313,9 @@ function menu_get_entry()
         declare local __rv_value
 
         hash_get_into $menu $tag '__rv_value'
-        
+
         print_debug_vl 5 "[$menu]:[$tag]=[$__rv_value]"
-        
+
         [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""
 
         return 0
@@ -397,13 +397,13 @@ function menu_get_eval()
 
     if hash_is_set $menu _menu_eval_${tag}_ ; then
         declare local __rv_value
-        
+
         hash_get_into $menu _menu_eval_${tag}_ '__rv_value'
 
         print_debug_vl 5 "[$menu]:[$tag]=[$__rv_value]"
 
         [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""
-        
+
         return 0
     else
         print_debug_vl 5 "[$menu]:[$tag]=(not defined)"
@@ -441,10 +441,10 @@ function menu_get_entry_list()
     function foreach_function()
     {
         declare local key=$1
-        
+
         # skip menu construct keywords
         menu_is_word_reserved -w $key && return
-        
+
         [ -n "$__rv_value" ] && __rv_value+=" $key"
         [ -z "$__rv_value" ] && __rv_value="$key"
 
@@ -584,7 +584,7 @@ function menu_render()
         # passing multiple feilds joined together as backtitle
         # check for first ':' seperating feilds
         declare local ct st
-        
+
         if [[ $backtitle == *:* ]] ; then
             ct=${backtitle%:*}
             st=${backtitle#*:}
@@ -624,7 +624,7 @@ function menu_render()
             declare local tbld trst
             terminal_set_color -v tbld --attribute reverse
             terminal_set_color -v trst --attribute reset
-            
+
             print_m -j -n -e "[$tbld $fmt_keynum $trst] :"
         else
             print_m -j -n "  $fmt_keynum  " :
@@ -635,7 +635,7 @@ function menu_render()
             declare -i local tagw=${#tag}
             declare -i local spad
             let spad=mtw-tagw+1
-            
+
             print_m -j -n -r $spad " "  # align each tag
             print_m -j -n "$tag" :      # output tag
         fi
@@ -669,7 +669,7 @@ function menu_render()
 
     # a magic number that could be exported for user configuration
     declare local menu_prompt_margin=5
-    
+
     # menu prompt text
     if [ -n "$menu_text" ] ; then
         print_m -j
@@ -908,7 +908,7 @@ function menu_start_handler()
 
         menu_get_layout -m $pmenu -p 'title_tree' -v 'prnt_title_tree'
         menu_get_layout -m $menu  -p 'title_tree' -v 'orig_title_tree'
-        
+
         menu_set_layout -m $menu -p 'title_tree' \
                         -v "$prnt_title_tree/$orig_title_tree"
     fi
@@ -919,14 +919,14 @@ function menu_start_handler()
     do
         declare -i local menu_columns
         declare -i local menu_lines
-        
+
         if terminal_get_size ${scope+-s $scope} -dc $dt_cols -dl $dt_lines \
                             -v_c 'menu_columns' -v_l 'menu_lines'
         then
             menu_set_layout -m $menu -p 'width'  -v "$menu_columns"
             menu_set_layout -m $menu -p 'height' -v "$menu_lines"
         fi
-    
+
         print_m_vl 1 "loading menu [$menu]"
 
         declare local menu_ret_tag
@@ -936,7 +936,7 @@ function menu_start_handler()
             if menu_get_eval -m $menu -i "$menu_ret_tag" -v 'eval_code' ; then
                 # run code assigned to the selected menu item
                 eval "$eval_code"
-                
+
                 # here we could catch any returned errors
             else
                 print_textbox -pn -hvc "#" \
@@ -953,7 +953,7 @@ function menu_start_handler()
 
     print_m_vl 3 "menu handler exit [$menu]"
 
-    return 
+    return
 }
 
 
