@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+###############################################################################
+#
+#
+#
+###############################################################################
+declare script_version=v1.0
+
+source "${0%/*}/paths_init.bash"
+source "${script_lib_dir}/shell-script-loader/v0.2.2/loader.bash-4"
+
+if [ "$LOADER_ACTIVE" != true ]; then
+    echo "unable to load the shell script loader, aborting..."; exit 1
+fi
+
+loader_addpath "${script_lib_dir}/bash-shift"
+
+include "print.bash"
+include "exception.bash"
+include "terminal_utility.bash"
+
+loader_finish
+
+#
+#
+#
+
+terminal_enable_color=true
+
+declare local tput
+ext_cmd_setf -nsp tput
+
+declare local x=1 y=1
+declare local xs  ys
+terminal_get_size -v_c xs -v_l ys
+
+declare local xll=$(($x+0)) xul=$(($xs-0))
+declare local yll=$(($y+1)) yul=$(($ys-0))
+
+declare local tx=':'
+declare local mc=7
+
+terminal_ansi_ctrl -eda
+
+while (( $yll <= $yul )) ; do
+    for (( ; x<xul; x++)) ; do
+        terminal_ansi_ctrl -cup $y $x -cf $(( ($y+$x)%$mc )) -cb $(( $mc-(($y+$x)%$mc) )) -ts $tx
+    done
+    for (( ; y<yul; y++)) ; do
+        terminal_ansi_ctrl -cup $y $x -cf $(( ($y+$x)%$mc )) -cb $(( $mc-(($y+$x)%$mc) )) -ts $tx
+    done
+    for (( ; x>xll; x--)) ; do
+        terminal_ansi_ctrl -cup $y $x -cf $(( ($y+$x)%$mc )) -cb $(( $mc-(($y+$x)%$mc) )) -ts $tx
+    done
+    for (( ; y>yll; y--)) ; do
+        terminal_ansi_ctrl -cup $y $x -cf $(( ($y+$x)%$mc )) -cb $(( $mc-(($y+$x)%$mc) )) -ts $tx
+    done
+
+    let xll++ ; let xul-- ; let yll++ ; let yul--
+done
+
+terminal_ansi_ctrl -tr
+
+###############################################################################
+# eof
+###############################################################################
+
