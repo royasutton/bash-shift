@@ -9,6 +9,7 @@ installed at: <tt>lib/shell-script-loader/v0.2.2</tt>.
 
  file                       | description
 :---------------------------|:------------------------------------------------
+ bash_shift_init.bash       | path names and loader initialization
  common.bash                | common helper functions
  exception.bash             | exceptions warning, errors, stack dump, functions
  exit_stat.bash             | command exit-code statistics functions
