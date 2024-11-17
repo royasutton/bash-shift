@@ -2,10 +2,10 @@
 # ignore
 #
 
-/work/
-/test/
-/contrib/
+# open-source script loader
 /lib/shell-script-loader/
+
+/work/
 
 #
 # eof
