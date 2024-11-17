@@ -1,7 +1,7 @@
 ###############################################################################
 #==============================================================================
 #
-# common script development helper functions
+# common helper functions
 #
 #------------------------------------------------------------------------------
 #
@@ -70,13 +70,13 @@ function common_textline()
 # Params:
 #  -s <string>  : input string
 #  -v <name>    : variable name for result string
-#  -e           : evaulate variables in input string
+#  -e           : evaluate variables in input string
 #
 # -ccl          : convert to all lower case
 # -ccu          : convert to all upper case
 #
 # -stc <list>   : set character list for trim operations (default=[:space:])
-# -tlc          : trim leading characters in '-stl' from begining of string
+# -tlc          : trim leading characters in '-stl' from beginning of string
 # -ttc          : trim trailing characters in '-stl' from end of string
 #==============================================================================
 function common_string_mod()
@@ -133,7 +133,7 @@ function common_string_mod()
     done
 
     # if the evaluate flag '-e' is not set: avoid evaluating words in '${__rvv}'
-    # preceeded by '$' by replacing all occurances of '$' with '\$' before eval
+    # preceded by '$' by replacing all occurrences of '$' with '\$' before eval
     [ -z "$ev" ] && __rvv=${__rvv//\$/\\$}
 
     [ -n "$__rvn" ] && eval "${__rvn}=\"${__rvv}\""
@@ -169,8 +169,8 @@ function common_confirm()
 #
 # Params:
 # -k : set keyword
-# -w : set keyword feild width
-# -s : set seperator for multiple values (default=' ')
+# -w : set keyword field width
+# -s : set separator for multiple values (default=' ')
 #  * : other arguments are values for the keyword
 #==============================================================================
 function common_print_key_value()
@@ -210,7 +210,7 @@ function common_print_key_value()
 # -s  : expansion variables scope
 # -l  : list of variables to dump (default=all)
 # -t  : title string
-# -w  : set keyword feild width
+# -w  : set keyword field width
 # -nt : do not print title box
 #==============================================================================
 function common_dump_expand_vars()
@@ -261,7 +261,7 @@ function common_dump_expand_vars()
 # -s  : external command scope
 # -l  : list of commands to dump (default=all)
 # -t  : title string
-# -w  : set keyword feild width
+# -w  : set keyword field width
 # -nt : do not print title box
 #==============================================================================
 function common_dump_ext_cmds()

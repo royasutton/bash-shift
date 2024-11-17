@@ -212,7 +212,7 @@ function ext_cmd_get()
             [ -z "$ext_cmd_get_error_continue" ] && \
                 abort_error "path for command [$name] not set in scope [$scope]." \
                         "set the global variable 'ext_cmd_get_error_continue=1'" \
-                        "to surpress and ignore this error condition."
+                        "to suppress and ignore this error condition."
             not_found1=true
         fi
     fi

@@ -9,7 +9,7 @@ installed at: <tt>lib/shell-script-loader/v0.2.2</tt>.
 
  file                       | description
 :---------------------------|:------------------------------------------------
- common.bash                | common script development helper functions
+ common.bash                | common helper functions
  exception.bash             | exceptions warning, errors, stack dump, functions
  exit_stat.bash             | command exit-code statistics functions
  external_command.bash      | external command management functions

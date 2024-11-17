@@ -75,7 +75,7 @@ function text_string_stats()
         $'\n')
             declare -i local lsize=${#line}
 
-            # set cmin to the first line size if uninitialize
+            # set cmin to the first line size if uninitialized
             [ -z "$__rvv_cmin" ] && __rvv_cmin=$lsize
 
             (( lsize < ${__rvv_cmin} )) && let __rvv_cmin=lsize

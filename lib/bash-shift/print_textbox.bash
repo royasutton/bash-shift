@@ -39,7 +39,7 @@ include "exception.bash"
 #      -rt : right text
 #     -clr : clear text strings
 #
-#     -ifs : set temp input feild seperator
+#     -ifs : set temp input field separator
 #
 #     -dcc : reset/default color ctrl string
 #     -hcc : horizontal character color ctrl string
@@ -57,11 +57,11 @@ include "exception.bash"
 #    -cjml : output multi-line text
 #    -rjml : output multi-line text
 #
-#   -ljfml : output multi-line pre-formated text
-#   -cjfml : output multi-line pre-formated text
-#   -rjfml : output multi-line pre-formated text
+#   -ljfml : output multi-line pre-formatted text
+#   -cjfml : output multi-line pre-formatted text
+#   -rjfml : output multi-line pre-formatted text
 #
-# -ifs3cml : output multi-line IFS-formated text
+# -ifs3cml : output multi-line IFS-formatted text
 #
 #      -bt : output box top
 #      -bb : output box bottom
@@ -275,7 +275,7 @@ function print_textbox()
     }
 
     #==========================================================================
-    # output a pre-formated multi-line text string
+    # output a pre-formatted multi-line text string
     #==========================================================================
     function do_fmline() {
         declare local tjp=$1
@@ -294,7 +294,7 @@ function print_textbox()
     }
 
     #==========================================================================
-    # parse a multi-line text string based on input feild seperator (IFS)
+    # parse a multi-line text string based on input field separator (IFS)
     #==========================================================================
     function do_ifsmline() {
         declare local mti="$1"
@@ -368,7 +368,7 @@ function print_textbox()
             rt=""
         ;;
 
-        -ifs)                       # set temp input feild seperator
+        -ifs)                       # set temp input field separator
             IFS="$2"
             IFS_changed=true
             shift 1
@@ -392,12 +392,12 @@ function print_textbox()
             do_mline "${1:1:1}" "$2"
             shift 1
         ;;
-        -ljfml|-cjfml|-rjfml)       # output multi-line pre-formated text
+        -ljfml|-cjfml|-rjfml)       # output multi-line pre-formatted text
             do_fmline "${1:1:1}" "$2"
             shift 1
         ;;
         -ifs3cml)                   # output 3 column multi-line
-            do_ifsmline "$2"        # IFS-formated text
+            do_ifsmline "$2"        # IFS-formatted text
             shift 1
         ;;
 
@@ -413,7 +413,7 @@ function print_textbox()
         shift 1
     done
 
-    # restore prior input feild seperator if temp was set
+    # restore prior input field separator if temp was set
     [ -n "${IFS_changed}" ] && IFS="$prior_IFS"
 
     return

@@ -109,7 +109,7 @@ function net_account_match()
 # -dd  : default domain
 # -v   : name of variable to store list of 'active accounts'
 # -s   : command scope for ping command
-# -vsp : verbose skip mactch processing
+# -vsp : verbose skip match processing
 #==============================================================================
 function net_account_active()
 {
@@ -178,7 +178,7 @@ function net_account_active()
 
     declare local __rv_value1   # active account list
 
-    # check hosts in account list for reachability
+    # check hosts in account list for reach ability
     for acct in $account_list ; do
         print_m_vl 1 -n "checking [$acct]"
 

@@ -69,7 +69,7 @@ function terminal_get_size()
         shift 1
     done
 
-    # retreive tput external command
+    # retrieve tput external command
     declare local tput
     ext_cmd_get -nv_p 'tput' ${cmd_scope+-s $cmd_scope}
 
@@ -155,7 +155,7 @@ function terminal_get_size()
 #==============================================================================
 function terminal_ansi_ctrl_ca()
 {
-    # if color printing is not enabled, return imediately
+    # if color printing is not enabled, return immediately
     [ -z "$terminal_enable_color" ] && return
 
     #==========================================================================
@@ -243,7 +243,7 @@ function terminal_ansi_ctrl_ca()
         shift 1
     done
 
-    # if ct is defined, seperate and assign component values.
+    # if ct is defined, separate and assign component values.
     # note: this over-rides values specified prior is the argument list.
     if [ -n "$ct" ] ; then
         # make sure there are exactly three characters

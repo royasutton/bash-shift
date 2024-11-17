@@ -554,7 +554,7 @@ function menu_render()
     # if width=0 assume and set to 80
     [ $width -eq 0 ] && width=80
 
-    # determine char possitions in menu keynum index
+    # determine char positions in menu keynum index
     # assumes max number of menu items to be less than 999
     declare -i local    keypos=1
     [ $tcnt -gt  9 ] && keypos=2
@@ -583,9 +583,9 @@ function menu_render()
 
     # output back title if defined
     if [ -n "$backtitle" ]; then
-        # this is a workabout to remain compatible with cdialog
+        # this is a work around to remain compatible with cdialog
         # passing multiple feilds joined together as backtitle
-        # check for first ':' seperating feilds
+        # check for first ':' separating fields
         declare local ct st
 
         if [[ $backtitle == *:* ]] ; then
@@ -748,7 +748,7 @@ function menu_get_selection()
     declare local ok_label
     declare local cancel_label
 
-    # retreive menu definition
+    # retrieve menu definition
     menu_get_layout -m $menu -pv title
     menu_get_layout -m $menu -pv title_tree
     menu_get_layout -m $menu -pv prompt

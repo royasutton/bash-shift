@@ -84,7 +84,7 @@ function abort_error()
 #
 # Params:
 # --abort-message-base : base error message
-# --abort-stack-start  : specify stack start possition
+# --abort-stack-start  : specify stack start position
 #  * : error words
 #==============================================================================
 function abort_message_list()

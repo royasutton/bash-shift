@@ -17,7 +17,7 @@ include "exception.bash"
 #
 # Params (first argument):
 # -j : join - don't prepend script name
-# -J : jump - character in scriptname
+# -J : jump - character in script name
 #  * : name - prepend script name to output
 # Params:
 # -n : do not output new-line at end of text line
@@ -25,7 +25,7 @@ include "exception.bash"
 # -E : disable echo escape interpretation
 # -j : joint the subsequent word
 # -r : repeat count for next word
-# -s : set the word seperator string
+# -s : set the word separator string
 #  * : text to be printed
 #==============================================================================
 function print_m()
@@ -51,7 +51,7 @@ function print_m()
         -E) es=''             ;; # disable echo escape interpretation
         -j) ns=''             ;; # joint the subsequent word
         -r) rn=$2   ; shift 1 ;; # repeat count for next word
-        -s) ws="$2" ; shift 1 ;; # set the word seperator string
+        -s) ws="$2" ; shift 1 ;; # set the word separator string
          *)
             while ((rn > 0))
             do

@@ -349,7 +349,7 @@ function expand_var_str()
         case $chr in
         # escape character: begin variable substitution
         $es_ch)
-            # get variable name at current possition
+            # get variable name at current position
             declare local var \
                           var_value
             get_var_name "${in_string:$idx}" 'var'

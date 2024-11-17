@@ -16,7 +16,7 @@ include "exit_stat.bash"
 # Params:
 # -l  : list of variables to dump
 # -t  : title string
-# -w  : set keyword feild width
+# -w  : set keyword field width
 # -nt : do not print title box
 #==============================================================================
 function parse_conf_file_dump_env_vars()
@@ -61,7 +61,7 @@ function parse_conf_file_dump_env_vars()
 #
 # Params:
 # 1 : return variable name
-# 2 : input feild seperator
+# 2 : input field separator
 # 3 : variable expansion scope
 # 4 : block level
 #------------------------------------------------------------------------------
@@ -267,8 +267,8 @@ function parse_conf_file_expand_for_loop()
     print_debug_vl 7 -e "$__rv_name=\"\n$expanded_code\""
 
     # avoid evaluating words in the loop code.
-    # variable expansion to occure during code exection not during loop-expansion.
-    # preceeded by '$' by replacing all occurances of '$' with '\$' before eval
+    # variable expansion to occur during code execution not during loop-expansion.
+    # preceded by '$' by replacing all occurrences of '$' with '\$' before eval
     expanded_code=${expanded_code//\$/\\$}
 
     eval "$__rv_name=\"$expanded_code\""
@@ -284,10 +284,10 @@ function parse_conf_file_expand_for_loop()
 # parse configuration file line
 #
 # Params:
-#  1 : custom-tag handler funtion
+#  1 : custom-tag handler function
 #  2 : environment variable name list
 #  3 : tag-name black-list
-#  4 : input feild seperator
+#  4 : input field separator
 #  5 : configuration file include level
 #  6 : command exit status scope (for accumulated totals)
 #  7 : configuration file debug mode
@@ -296,15 +296,15 @@ function parse_conf_file_expand_for_loop()
 #  9 : variable expansion scope
 # 10 : exit statistics scope (for current include level)
 # 11 : line tag
-# 12 : unexpanded line arguments string
+# 12 : un-expanded line arguments string
 # $* : expanded line arguments
 #==============================================================================
 function parse_conf_file_line()
 {
-    declare local tag_handler=$1        # handler funtion
+    declare local tag_handler=$1        # handler function
     declare local ev_tag_list="$2"      # variable list
     declare local tag_blacklist="$3"    # tag blacklist
-    declare local cf_ifs="$4"           # input feild seperator
+    declare local cf_ifs="$4"           # input field separator
     declare local inc_lev=$5            # included file level
     declare local x_scope=$6            # exit-stats scope (accumulated)
     declare local debug_conf=$7         # config file debug mode
@@ -313,7 +313,7 @@ function parse_conf_file_line()
     declare local v_scope=$9            # variable expansion scope
     declare local e_scope=${10}         # exit-stats scope (current inc. level)
     declare local tag=${11}             # line tag command
-    declare local tag_line="${12}"      # unexpanded line arguments string
+    declare local tag_line="${12}"      # un-expanded line arguments string
     shift 12                            # $* expanded line arguments
 
     #-------------------------------------------------------------------------#
@@ -604,7 +604,7 @@ function parse_conf_file_line()
 #   -f : configuration file name
 #   -l : configuration file include level (default=0)
 #
-# -ifs : configuration file tag/arguments input feild seperator
+# -ifs : configuration file tag/arguments input field separator
 #
 #  -th : custom tag handler funtion
 #  -vl : environment variable list
@@ -699,7 +699,7 @@ function parse_conf_file()
                             "in [$file_name]"
         done
         #---------------------------------------------------------------------#
-        # debuging
+        # debugging
         print_debug_vl 5 "[$tag]=[$tag_line]"
 
         if [ -n "$debug_conf" ] ; then

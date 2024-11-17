@@ -74,7 +74,7 @@ function file_check_owner()
     declare -a local lsld
     lsld=( $($ls_ld $ls_ldo $file) )
 
-    # feild possitions owner=3 group=4
+    # field positions owner=3 group=4
     declare local file_owner=${lsld[2]}
     declare local file_group=${lsld[3]}
 
@@ -105,7 +105,7 @@ function file_check_owner()
     if [ -n "$__rv_name" ] ; then
         declare local __rv_value
 
-        # skip the ', ' at the begining of the message
+        # skip the ', ' at the beginning of the message
         [ -n "$rpt_msg" ] && __rv_value=${rpt_msg:2}
         eval "$__rv_name=\"${__rv_value}\""
     fi
@@ -181,7 +181,7 @@ function file_check_mode()
     declare local stat=${lsld[0]}
 
     # cygwin appends an 11th character '+' to identify the
-    # existance of extended attributes. check for this case.
+    # existence of extended attributes. check for this case.
     [[ ${#stat} -eq 11 ]] && [[ ${stat:10:1} == '+' ]] && \
         stat=${stat:0:10}
 
@@ -237,8 +237,8 @@ function file_check_mode()
             # validate the permission check character
             [ $pch != '-' ] && [ $pch != $mname_s ] && \
                 abort_error "checking file [$file] for permissions [$perm];" \
-                  "invalid character [$pch] at possition [$(($idx+1))];" \
-                  "valid check for this possition is one of [${mname_s}|-|:]."
+                  "invalid character [$pch] at position [$(($idx+1))];" \
+                  "valid check for this position is one of [${mname_s}|-|:]."
 
             # append error to 'long' err_msg
             err_msg+=", $affirm $mclass $mname"
@@ -274,7 +274,7 @@ function file_check_mode()
     if [ -n "$__rv_name" ] ; then
         declare local __rv_value
 
-        # skip the ', ' at the begining of the message
+        # skip the ', ' at the beginning of the message
         [ -n "$rpt_msg" ] && __rv_value=${rpt_msg:2}
         eval "$__rv_name=\"${__rv_value}\""
     fi
@@ -295,7 +295,7 @@ function file_check_mode()
 # -p: permission flags string
 #     (ehfdxrw) = 'check that permission is true'
 #     (EHFDXRW) = 'check that permission is false'
-#          (:.) = these characters are ignored and can be used for formating
+#          (:.) = these characters are ignored and can be used for formatting
 # -q: quiet flag
 #==============================================================================
 function file_check()
@@ -334,8 +334,8 @@ function file_check()
         case $cch in
         e) [[   -e "$file" ]] || err_msg+=", does not exists"           ;;
         E) [[ ! -e "$file" ]] || err_msg+=", exists"                    ;;
-        h) [[   -h "$file" ]] || err_msg+=", is not a synbolic link"    ;;
-        H) [[ ! -h "$file" ]] || err_msg+=", is a synbolic link"        ;;
+        h) [[   -h "$file" ]] || err_msg+=", is not a symbolic link"    ;;
+        H) [[ ! -h "$file" ]] || err_msg+=", is a symbolic link"        ;;
         f) [[   -f "$file" ]] || err_msg+=", is not a regular file"     ;;
         F) [[ ! -f "$file" ]] || err_msg+=", is a regular file"         ;;
         d) [[   -d "$file" ]] || err_msg+=", is not a directory"        ;;
@@ -362,7 +362,7 @@ function file_check()
     if [ -n "$__rv_name" ] ; then
         declare local __rv_value
 
-        # skip the ', ' at the begining of the error message
+        # skip the ', ' at the beginning of the error message
         [ -n "$err_msg" ] && __rv_value=${err_msg:2}
         eval "$__rv_name=\"${__rv_value}\""
     fi
@@ -484,7 +484,7 @@ function file_backup()
             # make sure the specified path exists, or create it
             if ! file_check -d "backup directory" -f "$path" -p 'e' ${quiet+-q}
             then
-                # lookup mkdir with parrents and mode 755
+                # lookup mkdir with parents and mode 755
                 declare local md_pm755 md_pm755o
                 ext_cmd_get -n 'md_pm755' \
                             -v_p 'md_pm755' -v_o 'md_pm755o' ${scope+-s $scope}

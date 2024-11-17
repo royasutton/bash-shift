@@ -503,11 +503,11 @@ function exit_status_summary()
     fi
 
     declare local total=0
-    # interate over list to obtain total entry count total
+    # iterate over list to obtain total entry count total
     for code in $idx_list; do
         declare local __rv_value=0
 
-        # retreive only if an entry exists
+        # retrieve only if an entry exists
         hash_is_set $scope $code && hash_get_into $scope $code '__rv_value'
         let total+=$__rv_value
     done
@@ -535,7 +535,7 @@ function exit_status_summary()
         declare local __rv_value=0
         declare local __rv_text=""
 
-        # retreive only if an entry exists
+        # retrieve only if an entry exists
         hash_is_set $scope $code && hash_get_into $scope $code '__rv_value'
 
         [ -z "$nt" ] && hash_is_set $scope text_${code} &&
