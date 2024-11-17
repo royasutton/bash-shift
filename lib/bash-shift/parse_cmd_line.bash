@@ -6,7 +6,6 @@
 #==============================================================================
 ###############################################################################
 
-# be sure to 'source basenames.bash' prior to using these functions
 include "print.bash"
 include "print_textbox.bash"
 include "exception.bash"
