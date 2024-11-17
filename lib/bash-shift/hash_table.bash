@@ -88,7 +88,7 @@ function hash_unset()
 #==============================================================================
 function hash_is_set()
 {
-    eval "if [[ \"\${${hash_var_prefix:-__hash__}${1}_${2}-a}\" = \"a\" && 
+    eval "if [[ \"\${${hash_var_prefix:-__hash__}${1}_${2}-a}\" = \"a\" &&
         \"\${${hash_var_prefix:-__hash__}${1}_${2}-b}\" = \"b\" ]]
         then return 1; else return 0; fi"
 }
@@ -131,11 +131,11 @@ function hash_foreach()
 function hash_size_into()
 {
     declare local hash=$1
-    
+
     declare -i local __rv_value=0
 
     function foreach_function() { let __rv_value++; }
-    
+
     hash_foreach $hash foreach_function
 
     [ -n "$2" ] && eval "$2=${__rv_value}"
@@ -165,7 +165,7 @@ function hash_copy()
         print_m_vl 6 "copying to [$hash]:key=[$key] value=[$value]"
         hash_set $hash $key "$value"
     }
-    
+
     hash_foreach $src_hash foreach_function $dst_hash
 
     return
@@ -191,7 +191,7 @@ function hash_unset_all()
         print_m_vl 6 -J "hash_unset [$hash]:key=[$key]"
         hash_unset $hash $key
     }
-    
+
     hash_foreach $hash foreach_function $hash
 
     return
@@ -214,22 +214,22 @@ function hash_dump()
     {
         declare local key=$1
         declare local value="$2"
-        
+
         let size++
 
         declare local num
         printf -v num "% 3d" $size
-        
+
         print_textbox -lt "$num: $key = \"$value\"" -pl
     }
 
     declare -i local size=0
-    
+
     print_textbox -bc 2 -lt "begin" -ct "$title" -rt "begin" \
                   -bt -pl -hr
-    
+
     hash_foreach $hash foreach_function
-    
+
     print_textbox -bc 2 -lt "end" -ct "$size entries" -rt "end" \
                   -cc '~' -hc '~' -hr -bc 1 \
                   -cc '+' -hc '=' -pl -bb

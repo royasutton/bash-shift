@@ -27,11 +27,11 @@ function exit_status_code_idx()
 
     # strip leading '0' in the exit-code
     common_string_mod -s $1 -v code -stc 0 -tlc
-    
+
     # add the appropriate number of '0' based on
     # configuration 'exit_status_max_code_chars'
     printf -v $2 "%0${exit_status_max_code_chars:-3}d" $code
-    
+
     return
 }
 
@@ -231,7 +231,7 @@ function exit_status_set()
     abort_if_not_defined "$scope" "-s:scope"
 
     declare local idx_list
-    
+
     # code list
     if [ -n "$list" ] ; then
         declare local code_idx
@@ -287,12 +287,12 @@ function exit_status_get()
 
     declare local code_idx
     exit_status_code_idx $code code_idx
-    
+
     declare local __rv_value=0
-    
+
     hash_is_set $scope $code_idx &&
         hash_get_into $scope $code_idx '__rv_value'
-    
+
     print_debug_vl 5 "[$scope]:[$code_idx]=[$__rv_value]"
 
     [ -n "$__rv_name" ] && eval "$__rv_name=\"${__rv_value}\""
@@ -326,8 +326,8 @@ function exit_status_get_list()
     done
 
     abort_if_not_defined "$scope" "-s:scope"
- 
-    declare local __rv_value 
+
+    declare local __rv_value
 
     function foreach_function()
     {
@@ -340,11 +340,11 @@ function exit_status_get_list()
         else
             # add only text entries
             [[ $key != text_* ]] && return
-            
+
             # get index: remove 'text_' from front of key
             key=${key#text_}
         fi
-       
+
         [ -n "$__rv_value" ] && __rv_value+=" $key"
         [ -z "$__rv_value" ] && __rv_value="$key"
 
@@ -417,7 +417,7 @@ function exit_status_merge()
         else
             # copy exit-code counts
             [ -n "$cv" ] && hash_set $dscope $key "$value"
-            
+
             # add exit-code counts
             [ -n "$av" ] && exit_status_incr -s $dscope -e $key -c "$value"
         fi
@@ -482,7 +482,7 @@ function exit_status_summary()
 
     # set title if not set
     [ -z "$title" ] && title="$scope"
-    
+
     declare local idx_list
     # generate exit-code list
     if [ -n "$list" ] ; then
@@ -508,7 +508,7 @@ function exit_status_summary()
 
     # if configured, no output if there are zero entries
     [ -n "$nz" ] && [ $total -eq 0 ] && return
-    
+
     # title and headings
     if [ -z "$sb" ] ; then
         print_textbox ${tw+-tw $tw} ${bw+-bw $bw} -bc 2 \
@@ -531,7 +531,7 @@ function exit_status_summary()
 
         # retreive only if an entry exists
         hash_is_set $scope $code && hash_get_into $scope $code '__rv_value'
-        
+
         [ -z "$nt" ] && hash_is_set $scope text_${code} &&
             hash_get_into $scope text_${code} '__rv_text'
 

@@ -120,7 +120,7 @@ function ext_cmd_set()
         print_debug_vl 5 "[$scope]:[$name]:path=[$path]"
         hash_set $scope ${name} "$path"
     fi
-    
+
     if [ -n "$opts" ] ; then
         print_debug_vl 5 "[$scope]:[$name]:opts=[$opts]"
         hash_set $scope ${name}_opts "$opts"
@@ -164,11 +164,11 @@ function ext_cmd_get()
         -s)      scope=$2 ;                                 shift 1   ;;
 
         -n)      name=$2 ;                                  shift 1   ;;
-        
+
         -v_p)               __rv1_name=$2 ;                 shift 1   ;;
         -v_o)               __rv2_name=$2 ;                 shift 1   ;;
         -v_po)              __rv1_name=$2 ; append=true ;   shift 1   ;;
-            
+
         -nv_p)   name=$2 ;  __rv1_name=$2 ;                 shift 1   ;;
         -nv_po)  name=$2 ;  __rv1_name=$2 ; append=true ;   shift 1   ;;
 
@@ -191,10 +191,10 @@ function ext_cmd_get()
                 ext_cmd_get -s ${scope} -nv_p  ${c} ${ignore+-inoe}
             fi
         done
-        
+
         return 0
     fi
-    
+
     abort_if_not_defined "$scope" "-s:scope"
     abort_if_not_defined "$name"  "-n:name"
 
@@ -244,7 +244,7 @@ function ext_cmd_get()
 
     # return fail if either were not found
     [[ -n "$not_found1" || -n "$not_found2" ]] && return 1
-    
+
     # append option to path requested
     if [ -n "$append" ] ; then
         declare local path_opts="${__rv1_value}${__rv2_value+ $__rv2_value}"
@@ -279,16 +279,16 @@ function ext_cmd_get_list()
     done
 
     abort_if_not_defined "$scope" "-s:scope"
- 
-    declare local __rv_value 
+
+    declare local __rv_value
 
     function foreach_function()
     {
         declare local key=$1
-        
+
         # skip command option entries
         [[ $key == *_opts ]] && return
-        
+
         [ -n "$__rv_value" ] && __rv_value+=" $key"
         [ -z "$__rv_value" ] && __rv_value="$key"
 

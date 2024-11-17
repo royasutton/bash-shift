@@ -104,7 +104,7 @@ function file_check_owner()
     # if __rv_name specified, write report to string
     if [ -n "$__rv_name" ] ; then
         declare local __rv_value
-        
+
         # skip the ', ' at the begining of the message
         [ -n "$rpt_msg" ] && __rv_value=${rpt_msg:2}
         eval "$__rv_name=\"${__rv_value}\""
@@ -168,7 +168,7 @@ function file_check_mode()
 
     abort_if_not_defined "$file" "-f:file"
 
-    # get the status of the permission for the file using 'ls -ld'.  since it 
+    # get the status of the permission for the file using 'ls -ld'.  since it
     # is portable across most operating systems. could also use getfacl
     declare local ls_ld ls_ldo
     ext_cmd_get -nv_p 'ls_ld' -v_o 'ls_ldo' ${scope+-s $scope}
@@ -194,7 +194,7 @@ function file_check_mode()
     [[ ${#perm} -ne 10 && ${#perm} -ne 0 ]] && \
         abort_error "invalid 10 character file permission mode check" \
                     "for file [$file] check perm=[$perm]"
-    
+
     declare local err_msg \
                   err_msg_s \
                   last_mclass_s
@@ -207,7 +207,7 @@ function file_check_mode()
     for (( idx=0; idx < cnt; idx++ )) ; do
         declare local sch=${stat:$idx:1}
         declare local pch=${perm:$idx:1}
-    
+
         # skip permissions that are not to be checked ':',
         # and those that are of unknown status '~'
         [ $pch == ':' ] || [ $sch == '~' ] && continue
@@ -242,7 +242,7 @@ function file_check_mode()
 
             # append error to 'long' err_msg
             err_msg+=", $affirm $mclass $mname"
-            
+
             # append error to 'short' err_msg (correction how-to)
             if [ "${mname_s}" != "d" ] ; then
                 if [ "${mclass_s}" == "${last_mclass_s}" ] ; then
@@ -281,7 +281,7 @@ function file_check_mode()
 
     [ -z "$quiet" ] && [ -n "$rpt_msg" ] && print_m $desc [$file]$rpt_msg
 
-    return $err_cnt    
+    return $err_cnt
 }
 
 
@@ -369,13 +369,13 @@ function file_check()
 
     [ -z "$quiet" ] && [ $err_cnt -ne 0 ] && print_m $desc [$file]$err_msg
 
-    return $err_cnt    
+    return $err_cnt
 }
 
 
 #==============================================================================
 # assign first file from list of files that satisfy permissions checks
-# 
+#
 # Params:
 # -d: check description message
 # -l: file list
@@ -427,7 +427,7 @@ function file_check_assign()
 
 #==============================================================================
 # backup files
-# 
+#
 # Params:
 # -f: file to backup
 # -p: path for backup files (if differs from '-f:file')
@@ -469,14 +469,14 @@ function file_backup()
 
     # verify not a directory, is a regular file that exists and is readable
     file_check -d "file to backup" -f "$file" -p 'eDfr' ${quiet+-q} || return 1
-    
+
     if [ $num -ne 0 ] ; then
         # num !=0; doing backup
 
         declare local file_path="${file%/*}"
         declare local file_base="${file##*/}"
 
-        # if there is no '/' in $file, the path and base 
+        # if there is no '/' in $file, the path and base
         # will be the same and therefore file has no specified path
         [ "${file_path}" == "${file_base}" ] && file_path="."
 
@@ -497,7 +497,7 @@ function file_backup()
                 # make sure that path is a directory and is writable
                 file_check -d "backup directory" -f "$path" -p 'dw' ${quiet+-q} || \
                     return 1
-                    
+
                 [ -z "$quiet" ] && print_m "backup directory [$path] exists"
             fi
         else
@@ -529,7 +529,7 @@ function file_backup()
         if [ -z "$backup" ] ; then
             [ -z "$quiet" ] && \
                 print_m "$num backups exists. recycling oldest=[$oldest]..."
-                
+
             backup="$oldest"
         fi
 
@@ -563,7 +563,7 @@ function file_backup()
         # num==0; no backup
 
         # remove file if requested
-        if [ -n "$remove" ] ; then 
+        if [ -n "$remove" ] ; then
             declare local rm_f rm_fo
             ext_cmd_get -n 'rm_f' -v_p 'rm_f' -v_o 'rm_fo' ${scope+-s $scope}
 

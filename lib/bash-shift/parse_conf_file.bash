@@ -45,9 +45,9 @@ function parse_conf_file_dump_env_vars()
             print_m -j
             continue
         fi
-        
+
         value=${!item:=<not set>}
-        
+
         common_print_key_value -k "$item" ${kfw+-w $kfw} "-n"
         print_m -j "[$value]"
     done
@@ -75,14 +75,14 @@ function parse_conf_file_expand_for_loop()
     declare local cf_ifs="$2"
     declare local v_scope=$3
     declare local inc_lev=$4
-    
+
     declare local li_var=$5
     declare local in_kw=$6
     shift 6
 
     # remaining form enumerated list
     declare local loop_variable_list="$*"
-    
+
     # make sure the keyword 'in' exists as expected
     [ "${in_kw,,}" != "in" ] && \
         abort_error "invalid for-loop construct [for $li_var $in_kw $*]"
@@ -99,7 +99,7 @@ function parse_conf_file_expand_for_loop()
     declare local got_do_keyword
     declare local break_loop_in
     declare local skip_loop_in
-    
+
     # parse loop
     declare local tag tag_line prior_IFS=$IFS
     while IFS="$cf_ifs" read tag tag_line
@@ -147,9 +147,9 @@ function parse_conf_file_expand_for_loop()
                 abort_error "skip missing arguments" \
                             "block level=[$inc_lev]" \
                             "code-block line=[$cb_line]"
-  
+
             skip_loop_in="$exp_tag_line"
-            
+
             # verify that each skip condition exists in $loop_variable_list
             for skip_loop_in_iter in $skip_loop_in
             do
@@ -161,8 +161,8 @@ function parse_conf_file_expand_for_loop()
                         break
                     fi
                 done
-                
-                [ -z "$skip_condition_exist" ] && 
+
+                [ -z "$skip_condition_exist" ] &&
                 abort_error "invalid skip condition [${skip_loop_in_iter}]" \
                             "block level=[$inc_lev]" \
                             "code-block line=[$cb_line]"
@@ -171,7 +171,7 @@ function parse_conf_file_expand_for_loop()
             block_code+="# skip encountered"
             block_code+=", skip for in [$li_var]=[$skip_loop_in]"
             block_code+=", block level=[$inc_lev]\n"
-            
+
             print_m_vl 3 "block level $inc_lev;" \
                          "skip-for in [$li_var]=[$skip_loop_in]"
         ;;
@@ -186,7 +186,7 @@ function parse_conf_file_expand_for_loop()
             if [ ${#exp_tag_line_array[@]} == 0 ] ; then
                 # set to first work in $loop_variable_list
                 declare -a loop_variable_array=( $loop_variable_list )
-                
+
                 break_loop_in=${loop_variable_array[0]}
             else
                 # parse from break arguments
@@ -197,7 +197,7 @@ function parse_conf_file_expand_for_loop()
                             "code-block line=[$cb_line]"
 
                 break_loop_in=${exp_tag_line_array[1]}
-                
+
                 # verify that break condition exists in $loop_variable_list
                 declare local break_condition_exist
                 for loop_variable_iter in $loop_variable_list
@@ -207,17 +207,17 @@ function parse_conf_file_expand_for_loop()
                         break
                     fi
                 done
-                
-                [ -z "$break_condition_exist" ] && 
+
+                [ -z "$break_condition_exist" ] &&
                 abort_error "invalid break condition [${break_loop_in}]" \
                             "block level=[$inc_lev]" \
                             "code-block line=[$cb_line]"
             fi
-                        
+
             block_code+="# break encountered"
             block_code+=", break for in [$li_var]=[$break_loop_in]"
             block_code+=", block level=[$inc_lev]\n"
-            
+
             print_m_vl 3 "block level $inc_lev;" \
                          "break-for in [$li_var]=[$break_loop_in]"
         ;;
@@ -232,7 +232,7 @@ function parse_conf_file_expand_for_loop()
             [ -z "$break_loop_in" ] && \
                 block_code+=${!__rv_name}
         ;;
-        *) 
+        *)
             # if 'break' has not been set
             [ -z "$break_loop_in" ] && \
                 block_code+="$tag $tag_line\n"
@@ -252,30 +252,30 @@ function parse_conf_file_expand_for_loop()
         # add comment
         expanded_code+="# block level=$inc_lev"
         expanded_code+=", iterator $li_var=[$loop_variable_iter]\n"
-                            
+
         # update loop variable
         expanded_code+="set $li_var $loop_variable_iter\n"
-        
+
         # expand loop code
         expanded_code+="$block_code"
-        
+
         [ "$loop_variable_iter" == "$break_loop_in" ] && break
     done
     # clear loop variable
     expanded_code+="unset $li_var\n"
 
     print_debug_vl 7 -e "$__rv_name=\"\n$expanded_code\""
-  
+
     # avoid evaluating words in the loop code.
     # variable expansion to occure during code exection not during loop-expansion.
     # preceeded by '$' by replacing all occurances of '$' with '\$' before eval
     expanded_code=${expanded_code//\$/\\$}
-    
+
     eval "$__rv_name=\"$expanded_code\""
 
     print_m_vl 3 "block level $inc_lev;" \
                  "for [$li_var] expanded"
-    
+
     return
 }
 
@@ -326,7 +326,7 @@ function parse_conf_file_line()
         done
         abort_error "invalid environment variable [$2]"
     }
-    
+
     #-------------------------------------------------------------------------#
     # (1) call custom tags handler function (if defined)
     #     handler function to return 1 if the tag was handled
@@ -380,7 +380,7 @@ function parse_conf_file_line()
             print_m_vl 3 "$tag ${__rv_name}=[${__rv_value}]"
             eval "$__rv_name=\"$__rv_value\"" ;;
     #
-    ev_dump) 
+    ev_dump)
         if check_vl 1 ; then
             [ -z "$1" ] && parse_conf_file_dump_env_vars -l "$ev_tag_list"
             [ -n "$1" ] && parse_conf_file_dump_env_vars -l "$*" -nt
@@ -455,7 +455,7 @@ function parse_conf_file_line()
         # append expanded_loop_code to loop_file
         declare local loop_file=${script_tmp_root}-${inc_lev}
         echo -e $expanded_loop_code > $loop_file
-        
+
         print_debug_vl 7 -e "expanded to[$loop_file]=\"\n$expanded_loop_code\""
 
         # process expanded loop
@@ -467,7 +467,7 @@ function parse_conf_file_line()
                         ${c_scope:+-cs $c_scope} \
                         ${v_scope:+-vs $v_scope} \
                         ${x_scope:+-es $x_scope}
-        
+
         # delete tmp file
         print_m_vl 2 "removing expanded for-loop temporary file"
         declare local rm_f
@@ -573,7 +573,7 @@ function parse_conf_file_line()
     #
     trial_run)  trial_run=true
                 check_vl 1 && common_textbox \
-                    -t "trial-run set in script [trial_run=true]" -hvc "#" 
+                    -t "trial-run set in script [trial_run=true]" -hvc "#"
     ;;
     #-------------------------------------------------------------------------#
     textbox3)   check_vl 1 && common_textbox -t " $* " -bc 2 -hc '~' -fc '-' ;;
@@ -620,7 +620,7 @@ function parse_conf_file()
 {
     declare local file_name
     declare local inc_lev=0
-    
+
     declare local cf_ifs=$' \t\n'
 
     declare local tag_handler
@@ -630,10 +630,10 @@ function parse_conf_file()
     declare local c_scope
     declare local v_scope
     declare local x_scope
-    
+
     declare local debug_conf
   # declare -g local trial_run
-    
+
     while [ $# -gt 0 ] ; do
         case $1 in
         -f) file_name="$2"      ; shift 1   ;;
@@ -681,7 +681,7 @@ function parse_conf_file()
     while IFS="$cf_ifs" read tag tag_line
     do
         IFS=$prior_IFS
-         
+
         # remove leading and trailing spaces
         # make tag all lower-case using -ccl
         common_string_mod -s "$tag" -tlc -ttc -v 'tag' -ccl
@@ -689,7 +689,7 @@ function parse_conf_file()
 
         # skip comments and blank lines
         [[ "${tag:0:1}" == "#" || -z "${tag}" ]] && continue
-        
+
         #---------------------------------------------------------------------#
         # enforce tag blacklist
         for item in $tag_blacklist ; do
@@ -700,13 +700,13 @@ function parse_conf_file()
         #---------------------------------------------------------------------#
         # debuging
         print_debug_vl 5 "[$tag]=[$tag_line]"
-        
+
         if [ -n "$debug_conf" ] ; then
             # script debuging is set
             let cmd_num++
             printf -v fmt_cmd_num "%3d" $cmd_num
             printf -v fmt_inc_lev "%2d" $inc_lev
-            
+
             print_m -j " (${fmt_inc_lev}) ${fmt_cmd_num} :" \
                        "$tag(${tag_line:+ $tag_line })"
 
@@ -723,7 +723,7 @@ function parse_conf_file()
                 set unset sv_set sv_unset
                 aa_set aa_sets aa_get aa_get_ife aa_unset
                 for include"
-            
+
             declare local honor_tag=""
             for item in $honor_tag_list ; do
                 [[ "$item" == ":" || "$item" == "<sep>" ]] && continue
@@ -736,7 +736,7 @@ function parse_conf_file()
             [ -z "$honor_tag" ] && continue
         fi
         #---------------------------------------------------------------------#
-        
+
         # expand variables in the $tag_line
         declare local exp_tag_line
         expand_var_str -i "$tag_line" -v 'exp_tag_line' ${v_scope:+-s $v_scope}
@@ -746,16 +746,16 @@ function parse_conf_file()
                              "$cf_ifs" $inc_lev "$x_scope" "$debug_conf" \
                              "$c_scope" "$v_scope" "$e_scope" \
                              $tag "$tag_line" $exp_tag_line
-        
+
     done < "$file_name"
 
     # output exit stats for this include level
     check_vl 2 && exit_status_summary -s $e_scope \
                     -t "wget exit-code summary ($e_scope)" -sb -nz
-                            
+
     # add stats for this include-level to 'accumulator' scope totals
     exit_status_merge ${x_scope:+-ds $x_scope} -ss $e_scope -av
-    
+
     exit_status_destroy -s $e_scope
 
     print_m_vl 1 "script end: [$file_name]" \

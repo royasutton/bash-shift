@@ -78,14 +78,14 @@ function terminal_get_size()
 
     declare -i local new_cols
     declare -i local new_lines
-    
+
     # get new values: columns and lines
     if [ -n "$tput" ] ; then
         new_cols=$($tput cols)
         new_lines=$($tput lines)
     else
         [ -z "$quiet" ] && print_m_vl 1 "tput not available using defaults"
-        
+
         new_cols=$def_cols
         new_lines=$def_lines
     fi
@@ -93,7 +93,7 @@ function terminal_get_size()
     # current columns
     if [ -n "$__rvn_cols" ] ; then
         declare -i local cur_cols=${!__rvn_cols}
-        
+
         if [[ $cur_cols -ne $new_cols ]] ; then
             changed_cols=true
             eval "$__rvn_cols=\"${new_cols}\""
@@ -103,7 +103,7 @@ function terminal_get_size()
     # current lines
     if [ -n "$__rvn_lines" ] ; then
         declare -i local cur_lines=${!__rvn_lines}
-        
+
         if [[ $cur_lines -ne $new_lines ]] ; then
             changed_lines=true
             eval "$__rvn_lines=\"${new_lines}\""
@@ -160,7 +160,7 @@ function terminal_ansi_ctrl_ca()
 
     function numin()
     {
-        [[ $1 == [[:digit:]] ]] && 
+        [[ $1 == [[:digit:]] ]] &&
         (( $2 <= $1 )) && (( $1 <= $3 )) && \
             return 0
 
@@ -232,7 +232,7 @@ function terminal_ansi_ctrl_ca()
         shift 1
     done
 
-    # if ct is defined, seperate and assign component values. 
+    # if ct is defined, seperate and assign component values.
     # note: this over-rides values specified prior is the argument list.
     if [ -n "$ct" ] ; then
         # make sure there are exactly three characters
@@ -240,7 +240,7 @@ function terminal_ansi_ctrl_ca()
             abort_error "invalid argument passed to -ct [$ct]." \
                         "must be exactly three characters [afb]."
 
-        ca=${ct:0:1} # char 1 = attribute 
+        ca=${ct:0:1} # char 1 = attribute
         cf=${ct:1:1} # char 2 = foreground
         cb=${ct:2:1} # char 3 = background
     fi
@@ -285,42 +285,42 @@ function terminal_ansi_ctrl_ca()
 # -cud <n>      : move the cursor n cells down
 # -cuf <n>      : move the cursor n cells forward
 # -cub <n>      : move the cursor n cells back
-# 
+#
 # -cnl <n>      : move the cursor to beginning of line, n lines down
 # -cpl <n>      : move the cursor to beginning of line, n lines up
-# 
+#
 # -cha <n>      : move the cursor to column n
-# 
+#
 # -cup <n> <m>  : move the cursor to row n, column m
 # -hvp <n> <m>  : move the cursor to row n, column m
 # -hpa <n>      : horizontal (character/column) position absolute
 # -vpa <n>      : vertical (line/row) position absolute
-# 
+#
 # -ed <n>       : erase in display n={0, 1, or 2}
 # -ede          : same as '-ed 0' erase from cursor to end of display
 # -edb          : same as '-ed 1' erase from cursor to beginning of display
 # -eda          : same as '-ed 2' erase from entire display
-# 
+#
 # -el <n>       : erase in line n={0, 1, or 2}
 # -ele          : same as '-el 0' erase from cursor to end of line
 # -elb          : same as '-el 1' erase from cursor to beginning of line
 # -ela          : same as '-el 2' erase entire line
-# 
+#
 # -il           : insert n lines
 # -dl           : delete n lines
 # -ich          : insert n blank characters
 # -dch          : delete b characters
 #
 # -tbm          : set scrolling region [top;bottom]
-# 
+#
 # -su <n>       : scroll display up n lines
 # -sd <n>       : scroll display down n lines
-# 
+#
 # -rep <n>      : repeat the preceding character n times
 #
 # -scp          : *saves the cursor position and attributes
 # -rcp          : *restores the cursor position and attributes
-# 
+#
 # -scu <n>      : set style of the cursor n={0,1,2,3, or 4}
 # -scubb        : same as '-scu 0' blink block
 # -scusb        : same as '-scu 2' steady block
@@ -360,7 +360,7 @@ function terminal_ansi_ctrl()
     while [ $# -gt 0 ] ; do
         case $1 in
         -bell)  __rv_value+="\07"                           ;;
-        
+
         -cuu)   __rv_value+="${csi}${2}A"       ; shift 1   ;;
         -cud)   __rv_value+="${csi}${2}B"       ; shift 1   ;;
         -cuf)   __rv_value+="${csi}${2}C"       ; shift 1   ;;
@@ -380,7 +380,7 @@ function terminal_ansi_ctrl()
         -ede)   __rv_value+="${csi}0J"                      ;;
         -edb)   __rv_value+="${csi}1J"                      ;;
         -eda)   __rv_value+="${csi}2J"                      ;;
-        
+
         -el)    __rv_value+="${csi}${2}K"       ; shift 1   ;;
         -ele)   __rv_value+="${csi}0K"                      ;;
         -elb)   __rv_value+="${csi}1K"                      ;;
@@ -406,7 +406,7 @@ function terminal_ansi_ctrl()
         -scusb) __rv_value+="${csi}2 q"                     ;;
         -scubu) __rv_value+="${csi}3 q"                     ;;
         -scusu) __rv_value+="${csi}4 q"                     ;;
-        
+
         -cus)   __rv_value+="${csi}?25h"                    ;;
         -cuh)   __rv_value+="${csi}?25l"                    ;;
 
@@ -415,18 +415,18 @@ function terminal_ansi_ctrl()
 
         -tr)    __rv_value+="${csi}!p"                      ;;
         -ris)   __rv_value+="${esc}c"                       ;;
-        
+
         -ts)    __rv_value+="$2"                ; shift 1   ;;
 
         -v)     __rv_name=$2                    ; shift 1   ;;
 
         --codes) sc=true                                    ;;
- 
+
         # pass to terminal_ansi_ctrl_ca() - 1 variable operations
         -ca|-cf|-cb|-ct|--attribute|-can|--foreground|-cfn|--background|-cbn)
             terminal_ansi_ctrl_ca $1 $2 -v 'ca_codes'
             __rv_value+="$ca_codes"
-          
+
             shift 1
         ;;
 

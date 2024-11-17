@@ -105,7 +105,7 @@ function abort_message_list()
         esac
         shift 1
     done
-    
+
     [ $cnt -ge 2 ] && message+="s"
 
     print_m -J $message $list

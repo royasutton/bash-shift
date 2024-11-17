@@ -74,7 +74,7 @@ function net_account_match()
             mh=${mf}
             md=""
         fi
-                                    
+
         print_m_vl $vl -J -n "match:" \
             "[${u:-*}=${mu:-*}]&[${h:-*}=${mh:-*}]&[${d:-*}=${md:-*}]"
 
@@ -85,7 +85,7 @@ function net_account_match()
         then
             # found match
             print_m_vl $vl -j "? (yes)"
-            
+
             print_m_vl $vl -J "matches [$ma]."
 
             return 0
@@ -95,7 +95,7 @@ function net_account_match()
     done
 
     print_m_vl $vl -J "no match found."
-    
+
     return 1
 }
 
@@ -184,7 +184,7 @@ function net_account_active()
 
         # add default domain if without domain
         [ -n "$default_domain" ] && [[ $acct != *.* ]] && acct+=".${default_domain}"
-        
+
         # add default user if without username
         [[ $acct != *@* ]] && acct="${default_user}@${acct}"
 
