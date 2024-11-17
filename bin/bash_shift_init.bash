@@ -1,7 +1,9 @@
 ###############################################################################
+#==============================================================================
 #
-# Common directory and file name initialization.
+# common directory and file name initialization.
 #
+#==============================================================================
 ###############################################################################
 
 #
@@ -60,6 +62,15 @@ declare script_conf_file="${script_conf_dir}/${script_root_name}.conf"
 # default temporary-file root name
 #
 declare script_tmp_root="/tmp/${script_root_name}-$$"
+
+#
+# load shell script loader
+#
+source "${script_lib_dir}/shell-script-loader/v0.2.2/loader.bash-4"
+
+if [ "$LOADER_ACTIVE" != true ]; then
+    echo "unable to load the shell script loader, aborting..."; exit 1
+fi
 
 
 ###############################################################################

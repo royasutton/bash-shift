@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 ###############################################################################
 #
-#
+# color spiral example
 #
 ###############################################################################
 declare script_version=v1.0
 
-source "${0%/*}/paths_init.bash"
-source "${script_lib_dir}/shell-script-loader/v0.2.2/loader.bash-4"
-
-if [ "$LOADER_ACTIVE" != true ]; then
-    echo "unable to load the shell script loader, aborting..."; exit 1
-fi
+source "${0%/*}/bash_shift_init.bash"
 
 loader_addpath "${script_lib_dir}/bash-shift"
 
