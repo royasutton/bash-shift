@@ -13,6 +13,11 @@ declare script_home_prefix=${HOME}/local
 declare script_path_mode=1
 
 #
+# shell script loader distribution version
+#
+declare shell_script_loader_dist=${shell_script_loader_dist:=v0.2.2}
+
+#
 # verify minimum bash version
 #
 if [ $BASH_VERSINFO -lt 4 ] ; then
@@ -66,7 +71,7 @@ declare script_tmp_root="/tmp/${script_root_name}-$$"
 #
 # load shell script loader
 #
-source "${script_lib_dir}/shell-script-loader/v0.2.2/loader.bash-4"
+source "${script_lib_dir}/shell-script-loader/${shell_script_loader_dist}/loader.bash-4"
 
 if [ "$LOADER_ACTIVE" != true ]; then
     echo "unable to load the shell script loader, aborting..."; exit 1
